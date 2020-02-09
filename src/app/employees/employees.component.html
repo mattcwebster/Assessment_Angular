@@ -1,0 +1,175 @@
+<div class="container-fluid no-pad">
+  <div class="row mt-2 mx-2">
+    <fa-icon [icon]="faPlus" style="font-size: 2rem; color: rgb(82, 255, 47);; cursor: pointer;" (click)="showCreateNewForm()"></fa-icon>
+    <div class="row mt-3 mx-2" style="color: rgb(82, 255, 47); cursor: pointer;" (click)="showCreateNewForm()">Add Employee</div>
+    <button *ngIf="showCreateNewEmployee" class="btn btn-danger btn-sm text-white float-left ml-1 mt-2" (click)="createNewEmployee()" [innerText] ="currentEditID !== -1 ? 'Save' : 'Create Employee'">
+    </button>
+  </div>
+
+  <div class="row ml-2">
+    <form *ngIf="showCreateNewEmployee" [formGroup]="createNewEmployeeForm" class="col-12">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="row mt-1">
+            <div class="col-12">
+              <h6 class="">Name</h6>
+              <input type="text"
+                    formControlName="name"
+                    class="form-control" />
+            </div>
+          </div>
+          <div class="row mt-2 ml-2 error-message" *ngIf="(createNewEmployeeForm.controls.name.dirty || createNewEmployeeForm.controls.name.touched) && createNewEmployeeForm.controls.name.errors">
+            Employee Name is required
+          </div>
+          <div class="row mt-1">
+            <div class="col-12">
+              <h6 class="">Profile Picture Uri</h6>
+              <input type="text"
+                    formControlName="profilePicUri"
+                    class="form-control" />
+            </div>
+          </div>
+          <div class="row mt-2 ml-2 error-message" *ngIf="(createNewEmployeeForm.controls.profilePicUri.dirty || createNewEmployeeForm.controls.profilePicUri.touched) && createNewEmployeeForm.controls.profilePicUri.errors">
+            Profile Picture Uri is Required
+          </div>
+          <div class="row mt-1">
+            <div class="col-12">
+              <h6 class="">Direct Phone</h6>
+              <input type="text"
+                    formControlName="directPhone"
+                    class="form-control" />
+            </div>
+          </div>
+          <div class="row mt-2 ml-2 error-message" *ngIf="(createNewEmployeeForm.controls.directPhone.dirty || createNewEmployeeForm.controls.directPhone.touched) && createNewEmployeeForm.controls.directPhone.errors">
+            Direct Phone is required
+          </div>
+          <div class="row mt-1">
+            <div class="col-12">
+              <h6 class="">Email</h6>
+              <input type="text"
+                    formControlName="email"
+                    class="form-control" />
+            </div>
+          </div>
+          <div class="row mt-2 ml-2 error-message" *ngIf="(createNewEmployeeForm.controls.email.dirty || createNewEmployeeForm.controls.email.touched) && createNewEmployeeForm.controls.email.errors">
+            Email is required
+          </div>
+          <div class="row mt-1">
+            <div class="col-12">
+              <h6 class="">Fax</h6>
+              <input type="text"
+                    formControlName="fax"
+                    class="form-control" />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div class="row mt-1">
+            <div class="col-12">
+              <h6 class="">Title</h6>
+              <input type="text"
+                    formControlName="title"
+                    class="form-control" />
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-12">
+              <h6 class="">Cell</h6>
+              <input type="text"
+                    formControlName="cell"
+                    class="form-control" />
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-12">
+              <h6 class="">home</h6>
+              <input type="text"
+                    formControlName="home"
+                    class="form-control" />
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-12">
+              <h6 class="">Home Fax</h6>
+              <input type="text"
+                    formControlName="homeFax"
+                    class="form-control" />
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-12">
+              <h6 class="">Home Email</h6>
+              <input type="text"
+                    formControlName="homeEmail"
+                    class="form-control" />
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-12">
+              <h6 class="">Status</h6>
+              <input type="text"
+                    formControlName="status"
+                    class="form-control" />
+            </div>
+          </div>
+        </div>
+      
+      </div>
+    </form>
+  </div>
+
+  <div class="row mt-2 px-2">
+    <div *ngFor="let employee of businessManagementService.employeeRepository; let i=index" class="col-12 col-md-4 col-lg-3 p-1" >
+      <div class="card pl-1 py-1 m-1">
+        <div class="row pl-1 pr-1">
+          <div class="col-12">
+            <img class="float-left mr-2 profile-pic" [src]="employee.profilePicUri">
+            <h6 style="cursor: pointer" [routerLink]="'/employee-profile/' + employee.name">{{businessManagementService.getEmployeeNameWithTitle(i)}} </h6>
+            <fa-icon class="edit-icon" [icon]="faEdit" (click)="editEmployee(i)"></fa-icon>
+            <fa-icon class="delete-icon" [icon]="faClose" (click)="deleteEmployee(i)"></fa-icon>
+            <div class="row mt-n1" style="color: grey; font-size: x-small;">
+              {{employee.status}}
+            </div>
+        </div>   
+        </div>
+        <div class="row pl-1 pr-1">
+          <div class="col-6 mt-1 pr-0 text-bold" >
+            Direct: 
+            <span class="text-details">{{" " + employee.directPhone}}</span>
+          </div>
+          <div *ngIf="employee.email" class="col-6 mt-1 pl-1 pr-0 text-bold" >
+            Email: 
+            <span class="text-details">{{" " + employee.email}}</span>
+          </div>
+        </div>
+        <div class="row pl-1 pr-1">
+          <div *ngIf="employee.fax" class="col-6 mt-1 pr-0 text-bold" >
+            Fax: 
+            <span class="text-details">{{" " + employee.fax}}</span>
+          </div>
+          <div *ngIf="employee.cell" class="col-6 mt-1 pr-0 text-bold" >
+            Cell: 
+            <span class="text-details">{{" " + employee.cell}}</span>
+          </div>
+          <div *ngIf="employee.home" class="col-6 mt-1 pr-0 text-bold" >
+            Home: 
+            <span class="text-details">{{" " + employee.home}}</span>
+          </div>
+        </div>
+        <div class="row pl-1 pr-1">
+          <div *ngIf="employee.homeEmail" class="col-12 mt-1 pr-0 text-bold" >
+            Home Email: 
+            <span class="text-details">{{" " + employee.homeEmail}}</span>
+          </div>
+        </div>
+        <div class="row pl-1 pr-1">
+          <div *ngIf="employee.homeFax" class="col-12 mt-1 pr-0 text-bold" >
+            Home Fax: 
+            <span class="text-details">{{" " + employee.homeFax}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

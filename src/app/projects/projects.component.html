@@ -1,0 +1,89 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col mt-2">
+      <div class="row mt-2 mx-2">
+        <fa-icon [icon]="faPlus" style="font-size: 2rem; color: rgb(82, 255, 47); cursor: pointer;" (click)="showCreateNewForm()"></fa-icon>
+        <div class="row mt-3 mx-2" style="color:  rgb(82, 255, 47); cursor: pointer;" (click)="showCreateNewForm()">Add Project</div>
+        <button *ngIf="showCreateProject" class="btn btn-danger btn-sm text-white float-left ml-1 mt-2" (click)="createNewProject()" [innerText] ="currentEditID === -1 ? 'Create Project' : 'Save'">
+        </button>
+
+      </div>
+
+      <div class="row ml-2">
+        <form *ngIf="showCreateProject" [formGroup]="createProjectForm" class="col-12">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="row mt-1">
+                <div class="col-12">
+                  <h6 class="">Project Name</h6>
+                  <input type="text"
+                        formControlName="name"
+                        class="form-control" />
+                </div>
+              </div>
+              <div class="row mt-2 ml-2 error-message" *ngIf="(createProjectForm.controls.name.dirty || createProjectForm.controls.name.touched) && createProjectForm.controls.name.errors">
+                Project Name is required
+              </div>
+              <div class="row mt-1">
+                <div class="col-12">
+                  <h6 class="">Date</h6>
+                  <input type="date"
+                        formControlName="date"
+                        class="form-control" />
+                </div>
+              </div>
+              <div class="row mt-2 ml-2 error-message" *ngIf="(createProjectForm.controls.date.dirty || createProjectForm.controls.date.touched) && createProjectForm.controls.date.errors">
+                Date is Required
+              </div>
+              <div class="row mt-1">
+                <div class="col-12">
+                  <h6 class="">Primary Contact</h6>
+                  <input type="text"
+                        formControlName="contact"
+                        class="form-control" />
+                </div>
+              </div>
+              <div class="row mt-2 ml-2 error-message" *ngIf="(createProjectForm.controls.contact.dirty || createProjectForm.controls.contact.touched) && createProjectForm.controls.contact.errors">
+                Primary Contact is Required
+              </div>
+            </div>
+   
+          </div>
+        </form>
+      </div>
+  
+      <table class="table table-bordered table-striped p-2 mt-2">
+        <thead>
+          <tr>
+            <th>Project Name</th>
+            <th>Date</th>
+            <th>Contact</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="businessManagementService.projectRepository.length == 0">
+            <td colspan="4" class="text-center">
+              No Projects
+            </td>
+          </tr>
+          <tr *ngFor="let line of this.businessManagementService.projectRepository; let i=index">
+            <td>{{line.name}}</td>
+            <td class="text-left">
+              {{line.date | date}}
+            </td>
+            <td class="text-left">
+              {{ line.contact }}
+            </td>
+            <td class="text-left">
+              <fa-icon [icon]="faEdit" class="edit-icon-projects" (click)="editProject(i)"></fa-icon>
+            </td>
+            <td class="text-left">
+              <fa-icon [icon]="faClose" class="delete-icon-projects" (click)="deleteProject(i)"></fa-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

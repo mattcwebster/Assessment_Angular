@@ -1,0 +1,53 @@
+<div class="container-fluid" *ngIf="employee">
+  <div class="col-12 col-md-6 col-lg-4 p-1">
+    <div class="row mt-2 px-5">
+      <mat-card class="pl-1 py-1 m-1">
+        <div class="row px-3 py-2">
+          <h4 style="cursor: pointer" [routerLink]="'/employee-profile/' + employee.name">{{businessManageMentService.getEmployeeNameWithTitle(empoyeeIndex)}} </h4>
+          <div class="ml-2" style="color: grey; font-size: x-small;">
+            {{employee.status}}
+          </div>
+        </div>
+        <div class="row ml-2">
+          <img class="float-left mr-2 profile-pic-large" [src]="employee.profilePicUri">
+        </div>   
+        <div class="row pl-1 pr-1">
+          <div class="col-12 mt-1 text-bold" >
+            Direct: 
+            <span class="text-details">{{" " + employee.directPhone}}</span>
+          </div>
+          <div *ngIf="employee.email" class="col-12 mt-1 text-bold" >
+            Email: 
+            <span class="text-details">{{" " + employee.email}}</span>
+          </div>
+        </div>
+        <div class="row pl-1 pr-1">
+          <div *ngIf="employee.fax" class="col-12 mt-1 text-bold" >
+            Fax: 
+            <span class="text-details">{{" " + employee.fax}}</span>
+          </div>
+          <div *ngIf="employee.cell" class="col-12 mt-1 text-bold" >
+            Cell: 
+            <span class="text-details">{{" " + employee.cell}}</span>
+          </div>
+          <div *ngIf="employee.home" class="col-12 mt-1 text-bold" >
+            Home: 
+            <span class="text-details">{{" " + employee.home}}</span>
+          </div>
+        </div>
+        <div class="row pl-1 pr-1">
+          <div *ngIf="employee.homeEmail" class="col-12 mt-1 text-bold" >
+            Home Email: 
+            <span class="text-details">{{" " + employee.homeEmail}}</span>
+          </div>
+        </div>
+        <div class="row pl-1 pr-1">
+          <div *ngIf="employee.homeFax" class="col-12 mt-1 text-bold" >
+            Home Fax: 
+            <span class="text-details">{{" " + employee.homeFax}}</span>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
